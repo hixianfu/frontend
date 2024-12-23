@@ -1,31 +1,32 @@
+import { MonoText } from '@/components/StyledText';
+import { getItemAsync } from 'expo-secure-store';
+import { useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
 
-import EditScreenInfo from '@/components/EditScreenInfo';
-import { Text, View } from '@/components/Themed';
+export default function TabIndexScreen() {
+  const [token, setToken] = useState('')
 
-export default function TabOneScreen() {
+  useEffect(() => {
+    const getToken = async () => {
+      const token = await getItemAsync('access_token')
+      setToken(token ?? '')
+    }
+
+    getToken()
+  }, [])
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Tab One</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/(tabs)/index.tsx" />
-    </View>
-  );
+    <MonoText>
+      { token }
+    </MonoText> 
+  )
 }
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: '#fff',
+    padding: 20,
     flex: 1,
-    alignItems: 'center',
     justifyContent: 'center',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
   },
 });

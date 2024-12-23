@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "m-app",
-    "slug": "m-app",
+    "name": "wordz",
+    "slug": "wordz",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -20,7 +20,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.rich4st.mapp"
     },
     "web": {
       "bundler": "metro",
@@ -28,10 +29,20 @@
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      "expo-secure-store",
+      "expo-image-picker"
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "7cd30054-4775-426d-927e-e7e643affe01"
+      }
     }
   }
 }
