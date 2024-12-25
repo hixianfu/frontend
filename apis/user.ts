@@ -1,6 +1,6 @@
 import axios from '@/utils/Request'
-import { UserLoginDTO } from './types'
-import { User } from '../types/user'
+import { UserLoginDTO, UserRegisterDTO } from './types'
+import { User } from '../types'
 
 /**
  * 登录
@@ -11,6 +11,14 @@ export const login = (data: UserLoginDTO): Promise<{ access_token: string }> => 
     return axios.post('/auth/login', data)
 }
 
+/**
+ * 注册
+ * @param data: UserRegisterDTO
+ * @returns { access_token: string , user: User }
+ */
+export const register = (data: UserRegisterDTO): Promise<User> => {
+    return axios.post('/user/register', data)
+}
 
 /**
  * 获取用户信息

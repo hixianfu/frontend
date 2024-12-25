@@ -5,7 +5,7 @@ import ThemedCell from '@/components/ThemedCell';
 import ThemedContainer from '@/components/ThemedContainer';
 import { useEffect, useState } from 'react';
 import { Avatar, Dialog, Icon, PaperProvider, Portal, Button, Text } from 'react-native-paper';
-import { User } from '@/types/user';
+import { User } from '@/types';
 import { useNavigation } from '@react-navigation/native';
 import { deleteItemAsync, getItemAsync, setItemAsync } from 'expo-secure-store';
 import { launchImageLibraryAsync } from 'expo-image-picker';

@@ -6,6 +6,7 @@ import { useColorScheme } from '@/components/useColorScheme';
 import { useClientOnlyValue } from '@/components/useClientOnlyValue';
 import { Icon } from 'react-native-paper';
 import { View } from '@/components/Themed';
+import TabBarHeaderRight from '@/components/TabBarHeaderRight';
 
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
 function TabBarIcon(props: {
@@ -31,6 +32,7 @@ export default function TabLayout() {
         options={{
           title: '首页',
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
+          headerRight: () => <TabBarHeaderRight />
         }}
       />
       <Tabs.Screen

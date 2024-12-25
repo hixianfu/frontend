@@ -16,7 +16,6 @@ axiosInstance.interceptors.request.use(async (config: AxiosRequestConfig & { hea
 })
 
 axiosInstance.interceptors.response.use((response: AxiosResponse) => {
-    console.log(response, 'response')
     return response.data
 })
 

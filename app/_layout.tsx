@@ -5,8 +5,9 @@ import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
-
 import { useColorScheme } from '@/components/useColorScheme';
+import { IconButton } from 'react-native-paper';
+
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -53,6 +54,15 @@ function RootLayoutNav() {
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="login" options={{ headerShown: false }} />
+        <Stack.Screen name="register" options={{ headerShown: false }} />
+        <Stack.Screen name="account" options={{
+          headerShown: true,
+          title: '我的账号',
+        }} />
+        <Stack.Screen name="detail" options={{
+          headerShown: true,
+          title: '单词详情',
+        }} />
       </Stack>
     </ThemeProvider>
   );

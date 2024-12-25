@@ -2,7 +2,7 @@ import { useState } from "react";
 import { StyleSheet, Image, View, ToastAndroid } from "react-native";
 import { Button, Text, TextInput, Checkbox } from "react-native-paper";
 import { login } from "@/apis/user";
-import { useRouter } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import { setItemAsync } from "expo-secure-store";
 
 export default function LoginScreen() {
@@ -20,14 +20,12 @@ export default function LoginScreen() {
         ToastAndroid.show('登录中...', ToastAndroid.SHORT)
 
         try {
-            const { access_token} = await login({
+            const { access_token } = await login({
                 username,
                 password
             })
 
-            console.log(access_token, 'data')
-
-            if(access_token) {
+            if (access_token) {
                 ToastAndroid.show('登录成功', ToastAndroid.SHORT)
                 await setItemAsync('access_token', access_token)
                 router.push('/(tabs)')
@@ -45,7 +43,7 @@ export default function LoginScreen() {
                 <TextInput label="用户名" mode="outlined"
                     value={username} style={styles.input}
                     onChangeText={text => setName(text)} />
-                <TextInput label="密码" mode="outlined"
+                <TextInput label="密码" mode="outlined" secureTextEntry={true}
                     value={password} style={styles.input}
                     onChangeText={text => setPassword(text)} />
                 <Button mode="contained" style={styles.button} onPress={handleLogin}>
@@ -53,7 +51,9 @@ export default function LoginScreen() {
                 </Button>
                 <View style={styles.footer}>
                     <View style={styles.footerLinks}>
-                        <Text style={styles.footerLink}>注册</Text>
+                        <Link href="/register">
+                            <Text style={styles.footerLink}>注册</Text>
+                        </Link>
                         <Text style={styles.footerLink}>忘记密码？</Text>
                     </View>
                     <View style={styles.footerCheckbox}>
