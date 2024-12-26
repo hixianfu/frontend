@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosRequestHeaders } from "axios";
-import { getItem, getItemAsync } from "expo-secure-store";
+import { getItem } from "expo-secure-store";
 
 const axiosInstance = axios.create({
     baseURL: 'http://106.52.244.92:3333',
@@ -7,7 +7,7 @@ const axiosInstance = axios.create({
 })
 
 axiosInstance.interceptors.request.use(async (config: AxiosRequestConfig & { headers: AxiosRequestHeaders }) => {
-    const access_token = await getItemAsync('access_token')
+    const access_token = getItem('access_token')
     if (access_token) {
         config.headers.Authorization = `Bearer ${access_token}`
     }

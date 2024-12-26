@@ -8,6 +8,7 @@ import { User } from '@/types';
 import { useNavigation } from '@react-navigation/native';
 import { deleteItemAsync, getItemAsync, setItemAsync } from 'expo-secure-store';
 import { launchImageLibraryAsync } from 'expo-image-picker';
+import { router } from 'expo-router';
 
 export default function AccountScreen() {
     const [visible, setVisible] = useState(false);
@@ -77,6 +78,7 @@ export default function AccountScreen() {
                         <Text variant="bodyLarge">账号：{profile?.username}</Text>
                     </View>
                 </View>
+                <ThemedCell title="相机拍摄" icon={<Icon source="chevron-right" size={24} color="#000" />} onPress={() => router.push('/camera')} />
                 <ThemedCell title="退出登录" icon={<Icon source="chevron-right" size={24} color="#000" />} onPress={() => setVisible(true)} />
                 <View>
                     <Portal>

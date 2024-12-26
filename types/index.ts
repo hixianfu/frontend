@@ -1,6 +1,6 @@
 
 export interface User {
-    id: string
+    id: number
     name: string
     email: string
     avatar: string
@@ -12,7 +12,7 @@ export interface User {
 }
 
 export interface Vocabulary {
-    id: string
+    id: number
     name: string
     cover: string
     description: string
@@ -21,7 +21,7 @@ export interface Vocabulary {
 }
 
 export interface Word {
-    id: string
+    id: number
     cet4_word: string
     cet4_phonetic: string
     cet4_translate: string

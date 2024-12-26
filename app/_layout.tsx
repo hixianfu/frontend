@@ -55,6 +55,7 @@ function RootLayoutNav() {
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="login" options={{ headerShown: false }} />
         <Stack.Screen name="register" options={{ headerShown: false }} />
+        <Stack.Screen name="camera" options={{ headerShown: false }} />
         <Stack.Screen name="account" options={{
           headerShown: true,
           title: '我的账号',

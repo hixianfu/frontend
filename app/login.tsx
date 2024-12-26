@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { StyleSheet, Image, View, ToastAndroid } from "react-native";
 import { Button, Text, TextInput, Checkbox } from "react-native-paper";
-import { login } from "@/apis/user";
+import { login, fetchProfile } from "@/apis/user";
 import { Link, useRouter } from "expo-router";
 import { setItemAsync } from "expo-secure-store";
 
@@ -27,7 +27,13 @@ export default function LoginScreen() {
 
             if (access_token) {
                 ToastAndroid.show('登录成功', ToastAndroid.SHORT)
-                await setItemAsync('access_token', access_token)
+                await setItemAsync('access_token', access_token);
+                const user = await fetchProfile()
+                
+                if(user) {
+                    await setItemAsync('user', JSON.stringify(user));
+                }
+
                 router.push('/(tabs)')
             }
 

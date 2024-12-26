@@ -11,3 +11,8 @@ export interface UserRegisterDTO {
     password: string,
 }
 
+export enum WordProgressStatus {
+    FORGET = 0,
+    FAMILIAR = 1,
+    LEARNED = 2
+}

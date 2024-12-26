@@ -1,7 +1,7 @@
 import ThemedContainer from '@/components/ThemedContainer';
 import { useEffect, useState } from 'react';
-import { StyleSheet } from 'react-native';
-import { Card, Text } from 'react-native-paper';
+import { StyleSheet, View } from 'react-native';
+import { Card, Icon, Text } from 'react-native-paper';
 import { fetchVocabularyList } from '@/apis/vocabulary';
 import { Vocabulary } from '@/types';
 import { router } from 'expo-router';
@@ -19,13 +19,16 @@ export default function TabIndexScreen() {
   }, [])
 
   return (
-    <ThemedContainer>
+    <ThemedContainer style={{ padding: 20 }}>
       {vocabularies.map(vocabulary => (
         <Card key={vocabulary.id} onPress={() => router.push(`/detail?id=${vocabulary.id}`)}>
           <Card.Cover source={{ uri: vocabulary.cover }} />
           <Card.Title title={vocabulary.name} />
           <Card.Content>
-            <Text variant="bodyMedium">{vocabulary.description}</Text>
+            <View style={styles.content}>
+              <Text variant="bodyMedium">{vocabulary.description}</Text>
+              <Icon source="chevron-right" size={24} />
+            </View>
           </Card.Content>
         </Card>
       ))}
@@ -39,5 +42,11 @@ const styles = StyleSheet.create({
     padding: 20,
     flex: 1,
     justifyContent: 'center',
+  },
+  content: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginRight: 5,
   },
 });
