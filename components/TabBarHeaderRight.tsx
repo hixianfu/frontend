@@ -7,7 +7,7 @@ const TabBarHeaderRight = () => {
 
     return (
         <View style={styles.container}>
-            <Button onPress={() => {}}>
+            <Button onPress={() => { }}>
                 <Icon source="bell-off-outline" size={28} color="#000" />
             </Button>
             <Button onPress={
@@ -23,7 +23,6 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         alignItems: 'center',
-        gap: 15,
         marginRight: 15
     }
 })

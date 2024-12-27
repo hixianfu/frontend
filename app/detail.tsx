@@ -1,5 +1,5 @@
-import { useEffect, useRef } from "react";
-import { IconButton, Text, Snackbar, Button } from "react-native-paper";
+import { useEffect, useMemo, useRef } from "react";
+import { IconButton, Text, Snackbar, Button, ProgressBar } from "react-native-paper";
 import PagerView from 'react-native-pager-view';
 import { View, StyleSheet, ToastAndroid, ScrollView } from "react-native";
 import { useState } from "react";
@@ -21,6 +21,13 @@ export default function DetailScreen() {
     const [snackbarVisible, setSnackbarVisible] = useState(false);
     const [sampleExpanded, setSampleExpanded] = useState(false);
     const [phraseExpanded, setPhraseExpanded] = useState(false);
+
+    const progress = useMemo(() => {
+        if (words.length === 0) return 0;
+
+        const progress = (page / words.length).toFixed(2);
+        return parseFloat(progress);
+    }, [page, words]);
 
     useEffect(() => {
         setSnackbarVisible(true);
@@ -47,22 +54,26 @@ export default function DetailScreen() {
         }
     }
 
-    const handleUpdateWordProgress = async (wordId: number, status: WordProgressStatus) => {
-        await updateWordProgress(wordId, status);
+    const handleUpdateWordProgress = async (status: WordProgressStatus) => {
+        await updateWordProgress(words[page - 1].id, status);
         pagerRef.current?.setPage(page);
         setPage(page + 1);
     }
 
-    const handlePageScroll = (e: { nativeEvent: { position: number } }) => {
+    const handlePageSelected = (e: { nativeEvent: { position: number } }) => {
+        setPage(e.nativeEvent.position + 1);
         setSampleExpanded(true);
         setPhraseExpanded(true);
     }
 
     return (
         <ThemedContainer style={{ padding: 20 }}>
-            <PagerView style={styles.container} initialPage={page} ref={pagerRef} onPageScroll={handlePageScroll} onPageSelected={(e) => {
-                setPage(e.nativeEvent.position + 1);
-            }}>
+            <View>
+                <Text variant="bodyLarge">{page}/{words.length}</Text>
+                <ProgressBar animatedValue={progress} color="#6750A4" style={{ height: 10, marginBottom: 10, borderRadius: 10 }} />
+            </View>
+
+            <PagerView style={styles.container} initialPage={page} ref={pagerRef} onPageSelected={handlePageSelected}>
                 {words.map(word => {
                     return (
                         <View style={styles.page} key={word.id}>
@@ -80,10 +91,10 @@ export default function DetailScreen() {
 
                             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
                                 <Text variant="bodyLarge">短语</Text>
-                                <IconButton icon="chevron-down" size={24} onPress={() => setPhraseExpanded(!phraseExpanded)} />
+                                <IconButton icon={phraseExpanded ? 'chevron-up' : 'chevron-down'} size={24} onPress={() => setPhraseExpanded(!phraseExpanded)} />
                             </View>
                             <Collapsible collapsed={phraseExpanded} align="top">
-                                <ScrollView style={{ height: 150, width: 300 }}>
+                                <ScrollView style={{ height: 100, width: 300 }}>
                                     <Text variant="bodyLarge">
                                         {word.cet4_phrase}
                                     </Text>
@@ -92,44 +103,41 @@ export default function DetailScreen() {
 
                             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
                                 <Text variant="bodyLarge">例句</Text>
-                                <IconButton icon="chevron-down" size={24} onPress={() => setSampleExpanded(!sampleExpanded)} />
+                                <IconButton icon={sampleExpanded ? 'chevron-up' : 'chevron-down'} size={24} onPress={() => setSampleExpanded(!sampleExpanded)} />
                             </View>
                             <Collapsible collapsed={sampleExpanded} align="top">
-                                <ScrollView style={{ height: 150, width: 300 }}>
+                                <ScrollView style={{ height: 100, width: 300 }}>
                                     <Text variant="bodyLarge">
                                         {word.cet4_samples}
                                     </Text>
                                 </ScrollView>
                             </Collapsible>
-
-                            <View style={{ position: 'absolute', bottom: 0, right: 0, zIndex: 1000 }}>
-
-                                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '100%', marginBottom: 30 }}>
-                                    <Button style={{ width: '30%' }} mode="contained" onPress={() => handleUpdateWordProgress(word.id, WordProgressStatus.FORGET)}>
-                                        <Text variant="bodyLarge" style={{ color: '#fff' }}>
-                                            忘记
-                                        </Text>
-                                    </Button>
-                                    <Button style={{ width: '30%' }} mode="contained" onPress={() => handleUpdateWordProgress(word.id, WordProgressStatus.FAMILIAR)}>
-                                        <Text variant="bodyLarge" style={{ color: '#fff' }}>
-                                            熟悉
-                                        </Text>
-                                    </Button>
-                                    <Button style={{ width: '30%' }} mode="contained" onPress={() => handleUpdateWordProgress(word.id, WordProgressStatus.LEARNED)}>
-                                        <Text variant="bodyLarge" style={{ color: '#fff' }}>
-                                            已学会
-                                        </Text>
-                                    </Button>
-                                </View>
-                                <Text variant="bodyLarge" style={{ position: 'absolute', bottom: 0, right: '46%', zIndex: 1000 }}>
-                                    {page}/{words.length}
-                                </Text>
-                            </View>
                         </View>
                     )
                 })}
             </PagerView>
 
+
+            <View style={styles.buttons}>
+
+                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '100%', marginBottom: 30 }}>
+                    <Button style={{ width: '30%' }} mode="contained" onPress={() => handleUpdateWordProgress(WordProgressStatus.FORGET)}>
+                        <Text variant="bodyLarge" style={{ color: '#fff' }}>
+                            忘记
+                        </Text>
+                    </Button>
+                    <Button style={{ width: '30%' }} mode="contained" onPress={() => handleUpdateWordProgress(WordProgressStatus.FAMILIAR)}>
+                        <Text variant="bodyLarge" style={{ color: '#fff' }}>
+                            熟悉
+                        </Text>
+                    </Button>
+                    <Button style={{ width: '30%' }} mode="contained" onPress={() => handleUpdateWordProgress(WordProgressStatus.LEARNED)}>
+                        <Text variant="bodyLarge" style={{ color: '#fff' }}>
+                            已学会
+                        </Text>
+                    </Button>
+                </View>
+            </View>
             <Snackbar visible={snackbarVisible} onDismiss={() => setSnackbarVisible(false)} action={{
                 label: 'GOT IT',
             }}>
@@ -149,14 +157,15 @@ const styles = StyleSheet.create({
     },
     page: {
         flex: 1,
+        paddingBottom: 150,
         justifyContent: 'center',
         alignItems: 'center',
         overflowY: 'scroll',
     },
-    fixedPagination: {
+    buttons: {
         position: 'absolute',
         bottom: 0,
-        right: '46%',
-        zIndex: 1000,
+        right: 10,
+        left: 10
     }
 });

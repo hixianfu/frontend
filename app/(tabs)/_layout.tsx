@@ -4,8 +4,6 @@ import { Tabs } from 'expo-router';
 import Colors from '@/constants/Colors';
 import { useColorScheme } from '@/components/useColorScheme';
 import { useClientOnlyValue } from '@/components/useClientOnlyValue';
-import { Icon } from 'react-native-paper';
-import { View } from '@/components/Themed';
 import TabBarHeaderRight from '@/components/TabBarHeaderRight';
 
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
@@ -32,24 +30,16 @@ export default function TabLayout() {
         options={{
           title: '首页',
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
-          headerRight: () => <TabBarHeaderRight />
+          headerRight: () => <TabBarHeaderRight />,
+          tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         }}
       />
       <Tabs.Screen
         name="me"
         options={{
-          title: '我的',
-          headerTitle: () => (
-            <View style={{marginRight: 15}}>
-              <Icon source="chevron-left" size={24} color="#000" />
-            </View>
-          ),
-          tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
-          headerRight: () => (
-            <View style={{marginRight: 15}}>
-              <Icon source="dots-horizontal" size={24} color="#000" />
-            </View>
-          )
+          title: '测验',
+          tabBarIcon: ({ color }) => <TabBarIcon name="book" color={color} />,
+          headerRight: () => <TabBarHeaderRight />,
         }}
       />
     </Tabs>

@@ -62,7 +62,7 @@ function RootLayoutNav() {
         }} />
         <Stack.Screen name="detail" options={{
           headerShown: true,
-          title: '单词详情',
+          title: '今日单词',
         }} />
       </Stack>
     </ThemeProvider>
