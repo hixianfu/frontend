@@ -29,3 +29,28 @@ export interface Word {
     cet4_phrase: string
     cet4_samples: string
 }
+
+export interface Quiz {
+    id: number
+    type: string
+    question: string
+    options: string[]
+    correct_answer: string
+    courseId: number
+}
+
+export enum CourseLevel {
+    ALL = -1,
+    ZERO = 0, // 零基础
+    BEGINNER = 1, // 初级
+    INTERMEDIATE = 2, // 中级
+    ADVANCED = 3 // 高级
+}
+export interface Course {
+    id: number
+    title: string
+    cover: string
+    level: CourseLevel
+    quizCount: number
+    description: string
+}

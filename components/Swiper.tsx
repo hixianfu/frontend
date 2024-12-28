@@ -35,8 +35,8 @@ export default function Swiper({ style, pagination = true, images }: Props) {
 
 const styles = StyleSheet.create({
     container: {
-        height: 200,
-        marginBottom: 40,
+        height: '30%',
+        marginBottom: 20,
         position: 'relative'
     },
     page: {
