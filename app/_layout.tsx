@@ -6,7 +6,6 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
 import { useColorScheme } from '@/components/useColorScheme';
-import { IconButton } from 'react-native-paper';
 
 
 export {
@@ -55,17 +54,13 @@ function RootLayoutNav() {
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="login" options={{ headerShown: false }} />
         <Stack.Screen name="register" options={{ headerShown: false }} />
-        <Stack.Screen name="camera" options={{ headerShown: false }} />
         <Stack.Screen name="result" options={{ headerShown: false }} />
-        <Stack.Screen name="quiz" options={{ headerShown: false }} />
+        <Stack.Screen name="quiz-detail" options={{ headerShown: false }} />
         <Stack.Screen name="account" options={{
           headerShown: true,
           title: '我的账号',
         }} />
-        <Stack.Screen name="detail" options={{
-          headerShown: true,
-          title: '今日单词',
-        }} />
+        <Stack.Screen name="detail" options={{ headerShown: false }} />
       </Stack>
     </ThemeProvider>
   );

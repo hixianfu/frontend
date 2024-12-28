@@ -78,7 +78,6 @@ export default function AccountScreen() {
                         <Text variant="bodyLarge">账号：{profile?.username}</Text>
                     </View>
                 </View>
-                <ThemedCell title="相机拍摄" icon={<Icon source="chevron-right" size={24} color="#000" />} onPress={() => router.push('/camera')} />
                 <ThemedCell title="退出登录" icon={<Icon source="chevron-right" size={24} color="#000" />} onPress={() => setVisible(true)} />
                 <View>
                     <Portal>

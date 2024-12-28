@@ -65,7 +65,7 @@ export default function TabMeScreen() {
           <ScrollView style={{ height: '70%', width: '100%', marginTop: 8 }}>
             <View style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: 16 }}>
               {courses.map((c, index) => (
-                <CourseCard course={c} key={index} onPress={() => router.push(`/quiz?courseId=${c.id}`)} />
+                <CourseCard course={c} key={index} onPress={() => router.push(`/quiz-detail?courseId=${c.id}`)} />
               ))}
             </View>
           </ScrollView>
