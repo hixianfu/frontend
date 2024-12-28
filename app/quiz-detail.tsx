@@ -1,18 +1,21 @@
 import { View, StyleSheet, BackHandler, Alert } from "react-native";
-import { fetchQuizList } from "@/apis/quiz";
 import { useEffect, useState, useRef } from "react";
-import { Quiz } from "@/types";
+import { Quiz, AnswerLog } from "@/types";
 import { useSearchParams } from "expo-router/build/hooks";
-import PagerView from "react-native-pager-view";
-import ThemedContainer from "@/components/ThemedContainer";
 import { Button, PaperProvider, Portal, ProgressBar, Text, Modal, Icon } from "react-native-paper";
+import PagerView from "react-native-pager-view";
 import { router } from "expo-router";
+import ThemedContainer from "@/components/ThemedContainer";
+import { fetchQuizList } from "@/apis/quiz";
+import { createAnswerLog } from "@/apis/answer";
+import { storeUserId } from "@/hooks/useSecureStore";
 
 export default function QuizScreen() {
     const params = useSearchParams()
     const courseId = params.get('courseId')
     const [quizs, setQuizs] = useState<Quiz[]>([])
     const [page, setPage] = useState(0)
+    const [userAnswer, setUserAnswer] = useState<string>('')
     const [visible, setVisible] = useState(false)
     const [correctVisible, setCorrectVisible] = useState(false)
     const [score, setScore] = useState(0)
@@ -24,6 +27,7 @@ export default function QuizScreen() {
     }
 
     const handleOptionPress = (option: string) => {
+        setUserAnswer(option)
         if (option.slice(0, 1) === quizs[page].correct_answer) {
             setCorrectVisible(true)
         } else {
@@ -31,7 +35,18 @@ export default function QuizScreen() {
         }
     }
 
-    const handleNextQuiz = (correct: boolean) => {
+    const handleNextQuiz = async (correct: boolean) => {
+
+        const answer: Omit<AnswerLog, 'id'> = {
+            userId: storeUserId(),
+            questionId: quizs[page].id,
+            courseId: Number(courseId),
+            userAnswer,
+            correctAnswer: quizs[page].options.find(option => option.slice(0, 1) === quizs[page].correct_answer) || '',
+            isCorrect: correct ? '1' : '0'
+        }
+        await createAnswerLog(answer)
+
         if (correct) {
             setScore(score + 1)
         }

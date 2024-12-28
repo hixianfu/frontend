@@ -54,3 +54,13 @@ export interface Course {
     quizCount: number
     description: string
 }
+
+export interface AnswerLog {
+    id: number
+    userId: number
+    questionId: number
+    courseId: number
+    userAnswer: string
+    correctAnswer: string
+    isCorrect: '0' | '1' // 0: 错误; 1: 正确
+}

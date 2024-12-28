@@ -36,7 +36,7 @@ export default function ResultScreen() {
                     </View>
                 </View>
             </View>
-            <Button mode="contained" style={styles.button} onPress={() => router.push('/me')}>
+            <Button mode="contained" style={styles.button} onPress={() => router.push('/quiz')}>
                 <Text variant="titleLarge" style={styles.buttonText}>继续</Text>
             </Button>
         </View>
